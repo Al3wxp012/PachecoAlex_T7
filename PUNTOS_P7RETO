@@ -1,0 +1,54 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from numpy.polynomial import Polynomial
+
+# Opción 1: resolver por numerador y denominador
+num = [1, 3]
+den = [1, 5, 20, 16, 0]
+
+# Polos y ceros
+zs = np.roots(num)
+ps = np.roots(den)
+
+# Centroide (σ₀)
+sigma0 = -2/3
+
+# Líneas de las asíntotas
+x = np.arange(sigma0, 6.1, 0.1)
+y1 = np.sqrt(3) * (x - sigma0)
+y2 = -y1
+xa = np.arange(-6, sigma0 + 0.1, 0.1)
+ya = np.zeros_like(xa)
+
+# Crear figura
+plt.figure(figsize=(8, 8))
+plt.axis([-6, 6, -6, 6])
+plt.gca().set_aspect('equal')
+plt.grid(True)
+
+# Graficar asíntotas
+h1, = plt.plot(x, y1, 'k-.')  # Asíntota +60°
+h2, = plt.plot(x, y2, 'k-.')  # Asíntota -60°
+h3, = plt.plot(xa, ya, 'k-.') # Parte izquierda horizontal
+
+# Graficar ceros, polos, centroide y cruces
+h4 = plt.plot(np.real(zs), np.imag(zs), 'bo', linewidth=2, label='Ceros')    # Ceros
+h5 = plt.plot(np.real(ps), np.imag(ps), 'rx', linewidth=2, label='Polos')    # Polos
+h6 = plt.plot(sigma0, 0, 'ko', markersize=6, linewidth=1.5, label='Centroide')  # Centroide
+h7 = plt.plot(0, 1.1547, 'bs', markersize=6, linewidth=1, label='Cruces eje jω')
+h8 = plt.plot(0, -1.1547, 'bs', markersize=6, linewidth=1)
+h9 = plt.plot(0, -3.1409, 'gs', markersize=6, linewidth=1, label='Puntos de corte jw')
+h10 = plt.plot(0, 3.1409, 'gs', markersize=6, linewidth=1)
+h11 = plt.plot(-4.2376, 0, 'ko', markersize=6, linewidth=1)
+h12 = plt.plot(-0.524, 0, 'ko', markersize=6, linewidth=1)
+
+# Etiquetas
+plt.xlabel('Parte real')
+plt.ylabel('Parte imaginaria')
+plt.title('Ubicación de polos y ceros en el plano complejo')
+
+# Leyenda
+plt.legend(loc='best')
+
+# Mostrar gráfico
+plt.show()
